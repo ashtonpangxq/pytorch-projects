@@ -3,6 +3,13 @@ This repository contains implementation of Image Classification model with [PyTo
 
 Datasets can be trained with `VGG, SqueezeNet, DenseNet, ResNet, AlexNet, Inception` for this particular project.
 
+## Set Up Instructions
+```sh
+conda create -n img-classification python=3.8
+conda activate img-classification
+pip install -r requirements.txt
+```
+
 ## Config File
 The config file is a json file containing all the parameters and paths required for training. List of parameters are listed below:
 * **model_name** is the name of the model you wish to use and must be selected from this list: [resnet, alexnet, vgg, squeezenet, densenet, inception].
