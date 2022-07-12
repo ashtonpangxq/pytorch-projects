@@ -2,10 +2,18 @@
 Contains functions for training and testing a PyTorch model.
 """
 from typing import Dict, List, Tuple
+import time
+from datetime import date
 
 import torch
+import mlflow
 
 from tqdm.auto import tqdm
+
+
+def log_scalar(name, value, step):
+    """Log a scalar value to MLFlow"""
+    mlflow.log_metric(name, value, step=step)
 
 
 def train_step(
@@ -164,6 +172,9 @@ def train(
               test_loss: [1.2641, 1.5706],
               test_acc: [0.3400, 0.2973]}
     """
+    # Time Tracking
+    since = time.time()
+
     # Create empty results dictionary
     results = {"train_loss": [], "train_acc": [], "test_loss": [], "test_acc": []}
 
@@ -180,6 +191,12 @@ def train(
             model=model, dataloader=test_dataloader, loss_fn=loss_fn, device=device
         )
 
+        # Log Metrics into MLFlow
+        log_scalar("train_loss", train_loss, epoch + 1)
+        log_scalar("train_acc", train_acc, epoch + 1)
+        log_scalar("test_loss", test_loss, epoch + 1)
+        log_scalar("test_acc", test_acc, epoch + 1)
+
         # Print out what's happening
         print(
             f"Epoch: {epoch+1} | "
@@ -194,6 +211,14 @@ def train(
         results["train_acc"].append(train_acc)
         results["test_loss"].append(test_loss)
         results["test_acc"].append(test_acc)
+    
+    # Log Parameters into MLFlow
+    time_elapsed = time.time() - since
+    best_test_acc = max(results['test_acc'])
+    mlflow.log_params('Training time', time_elapsed)
+    print('Training completed in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
+    print('Best Test Accuracy: {:.4f}'.format(best_test_acc))
+    mlflow.log_param('Best Test Accuracy', best_test_acc)
 
-    # Return the filled results at the end of the epochs
-    return results
+    # Return the model and filled results at the end of the epochs
+    return model, results
