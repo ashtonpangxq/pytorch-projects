@@ -11,28 +11,40 @@ pip install -r requirements.txt
 ```
 
 ## Config File
-The config file is a json file containing all the parameters and paths required for training. List of parameters are listed below:
-* **model_name** is the name of the model you wish to use and must be selected from this list: [resnet, alexnet, vgg, squeezenet, densenet, inception].
-* **num_classes** is the number of classes in the dataset.
-* **batch_size** is the batch size used for training and may be adjusted accordingly.
-* **num_epochs** is the number of training epochs we want to run for training our model.
+The config file is a .yaml file containing all the parameters and paths required for training. List of parameters are listed below:
+* **model_name**: Name of Model
+* **num_epochs**: Number of Training Epochs to train model.
+* **batch_size**: The batch size used for training and may be adjusted accordingly.
+* **hidden_units**: The number of hidden units for the Model.
+* **learning_rate**: The learning rate for Model Optimizer. 
+* **num_classes**: Number of classes in the dataset.
 * **feature_extract** is a boolean that defines if we are finetuning or feature extracting.
     * If feature_extract = False, the model is finetuned and all model parameters are updated. 
     * If feature_extract = True, only the last layer parameters are updated, the others remain fixed.
+* **pre_trained**: If using pre-trained parameters for training.
+* **device**: device to use for training. (cuda or cpu)
 
 ```
-{
-  "model_name":"<squeezenet/resnet/vgg16/densenet/alexnet/inception>", 
-  "num_classes": "<number of classes>",
-  "batch_size": "32",
-  "num_epochs": "<number of epoches>",
-  "feature_extract": "False",
-  "pre_trained": "True",
-  "save_model": "<path to save model>",
-  "save_confusion_mat": "/exp/data/densenet_17_mat.csv",
-  "data_dir":"<path of the dataset>",
-  "classes": [<list of class names>]
-}
+params:
+  model_name: "EfficientNetB2"
+  num_epochs: 10
+  batch_size: 32
+  hidden_units: 10
+  learning_rate: 0.001
+  num_classes: 3
+  feature_extract: True
+  pre_trained: True
+  device: "cuda"
+  classes:
+    - pizza
+    - steak
+    - sushi
+paths:
+  save_model: "exp/data/models/"
+  save_confusion_mat: "exp/data/efficientnetb2_mat.csv"
+  data_dir: "data/"
+  train_dir: "data/pizza_steak_sushi/train"
+  test_dir: "data/pizza_steak_sushi/test"
 ```
 
 ## Training steps 
@@ -49,12 +61,3 @@ I have used `MLflow` to track my experiments and save parameters used for a part
 
 - Install MLflow from PyPI via ```pip install mlflow```
 - The MLflow Tracking UI will show runs logged in `./mlruns` at [http://localhost:5000](http://localhost:5000). Start it with: `mlflow ui`
-
-## Run as Docker Container 
-
-- `sudo docker build -t classification:0.1 .`
-- `sudo docker run -it --rm -p 5000:5000 -v <dataset path>:/code/data/ classification:0.1`
-- `cd code`
-- `python main.py --config training`
-- `mlflow server --host=0.0.0.0`
-- `http://localhost:5000/`
