@@ -1,13 +1,9 @@
-argparse
 matplotlib
 pandas
 numpy
 scipy
 seaborn
-opencv-python
 pillow
-scikit-image
-slidingwindow
 torch
 torchvision
 pytest

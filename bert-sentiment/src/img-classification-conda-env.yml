@@ -1,4 +1,4 @@
-name: img-classification
+name: bert-sentiment
 channels:
   - defaults
   - conda-forge
@@ -6,16 +6,14 @@ dependencies:
   - python=3.8.13
   - pip=22.0.4
   - pip:
-    -argparse
+    -hydra-core
     -matplotlib
     -pandas
     -numpy
     -scipy
     -seaborn
-    -opencv-python
     -pillow
     -scikit-image
-    -slidingwindow
     -torch
     -torchvision
     -pytest
