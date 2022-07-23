@@ -1,0 +1,22 @@
+name: img-classification
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.8.13
+  - pip=22.0.4
+  - pip:
+    -argparse
+    -matplotlib
+    -pandas
+    -numpy
+    -scipy
+    -seaborn
+    -opencv-python
+    -pillow
+    -scikit-image
+    -slidingwindow
+    -torch
+    -torchvision
+    -pytest
+    -mlflow
