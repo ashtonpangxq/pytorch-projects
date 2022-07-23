@@ -1,0 +1,20 @@
+params:
+  model_name: TinyVGG
+  num_epochs: 10
+  batch_size: 32
+  hidden_units: 10
+  learning_rate: 0.001
+  num_classes: 3
+  feature_extract: true
+  pre_trained: true
+  device: cuda
+  classes:
+  - pizza
+  - steak
+  - sushi
+paths:
+  save_model: exp/data/models/
+  save_confusion_mat: exp/data/tinyvgg_mat.csv
+  data_dir: data/
+  train_dir: data/pizza_steak_sushi/train
+  test_dir: data/pizza_steak_sushi/test

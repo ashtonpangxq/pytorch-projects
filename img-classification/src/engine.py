@@ -15,7 +15,6 @@ def log_scalar(name, value, step):
     """Log a scalar value to MLFlow"""
     mlflow.log_metric(name, value, step=step)
 
-
 def train_step(
     model: torch.nn.Module,
     dataloader: torch.utils.data.DataLoader,
@@ -138,8 +137,8 @@ def train(
     test_dataloader: torch.utils.data.DataLoader,
     optimizer: torch.optim.Optimizer,
     loss_fn: torch.nn.Module,
-    epochs: int,
     device: torch.device,
+    epochs: int = 10,
 ) -> Dict[str, List[float]]:
     """Trains and tests a PyTorch model.
 
@@ -191,7 +190,7 @@ def train(
             model=model, dataloader=test_dataloader, loss_fn=loss_fn, device=device
         )
 
-        # Log Metrics into MLFlow
+        # Log into MLFlow
         log_scalar("train_loss", train_loss, epoch + 1)
         log_scalar("train_acc", train_acc, epoch + 1)
         log_scalar("test_loss", test_loss, epoch + 1)
@@ -211,14 +210,18 @@ def train(
         results["train_acc"].append(train_acc)
         results["test_loss"].append(test_loss)
         results["test_acc"].append(test_acc)
-    
-    # Log Parameters into MLFlow
-    time_elapsed = time.time() - since
-    best_test_acc = max(results['test_acc'])
-    mlflow.log_params('Training time', time_elapsed)
-    print('Training completed in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
-    print('Best Test Accuracy: {:.4f}'.format(best_test_acc))
-    mlflow.log_param('Best Test Accuracy', best_test_acc)
 
-    # Return the model and filled results at the end of the epochs
+    # Log into MLFlow
+    time_elapsed = time.time() - since
+    best_test_acc = max(results["test_acc"])
+    mlflow.log_param("Training time", time_elapsed)
+    print(
+        "Training completed in {:.0f}m {:.0f}s".format(
+            time_elapsed // 60, time_elapsed % 60
+        )
+    )
+    print("Best Test Accuracy: {:.4f}".format(best_test_acc))
+    mlflow.log_param("Best Test Accuracy", best_test_acc)
+
+    # Return the filled results at the end of the epochs
     return model, results

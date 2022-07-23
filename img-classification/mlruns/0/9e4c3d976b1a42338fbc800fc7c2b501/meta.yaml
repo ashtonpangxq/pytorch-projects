@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/AshtonPang/Documents/Python/pytorch-projects/img-classification/mlruns/0/9e4c3d976b1a42338fbc800fc7c2b501/artifacts
+end_time: 1658549248119
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 9e4c3d976b1a42338fbc800fc7c2b501
+run_uuid: 9e4c3d976b1a42338fbc800fc7c2b501
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1658549248083
+status: 4
+tags: []
+user_id: AshtonPang
