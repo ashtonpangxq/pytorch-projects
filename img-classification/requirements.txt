@@ -12,3 +12,4 @@ torch
 torchvision
 pytest
 mlflow
+hydra-core

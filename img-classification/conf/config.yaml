@@ -1,0 +1,13 @@
+params:
+  model_name: "TinyVGG"
+  num_classes: 3
+  feature_extract: True
+  pre_trained: True
+  save_model: "../exp/data/models/"
+  save_confusion_mat: "../exp/data/tinyvgg_mat.csv"
+  data_dir: "../data/"
+  device: "cuda"
+  classes:
+    - pizza
+    - steak
+    - sushi
