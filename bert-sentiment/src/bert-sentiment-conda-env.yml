@@ -16,5 +16,6 @@ dependencies:
     -scikit-image
     -torch
     -torchvision
+    -transformers
     -pytest
     -mlflow
