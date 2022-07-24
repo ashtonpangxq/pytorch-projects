@@ -1,0 +1,12 @@
+params:
+  device: "cuda"  
+  max_length: 512
+  train_batch_size: 8
+  valid_batch_size: 4
+  epochs: 10
+
+paths:
+  bert_path: "../data/bert-based-uncased"
+  model_path: "../model/model.bin"
+  train_path: "../data/train.csv"
+  
