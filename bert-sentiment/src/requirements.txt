@@ -6,6 +6,7 @@ seaborn
 pillow
 torch
 torchvision
+transformers
 pytest
 mlflow
 hydra-core
